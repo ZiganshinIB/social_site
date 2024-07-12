@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+<h1>Вы {{ new_user.first_name }} зарегистрировались!</h1>
+<p>Теперь вы можете <a href="{% url 'login' %}">войти на сайт</a>.</p>
+{% endblock %}
