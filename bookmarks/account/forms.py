@@ -36,7 +36,7 @@ class UserRegistrationForm(forms.ModelForm):
         """ Check if email already in use."""
         data = self.cleaned_data['email']
         if User.objects.filter(email=data).exists():
-            raise forms.ValidationError('Email already in use.')
+            raise forms.ValidationError('Почта уже занята.')
         return data
 
 
@@ -48,13 +48,10 @@ class UserEditForm(forms.ModelForm):
     def clean_email(self):
         """ Check if email already in use."""
         email = self.cleaned_data.get('email')
-        if email == '':
-            return email
-        try:
-            user = User.objects.exclude(id=self.instance.id).get(email=email)
-        except User.DoesNotExist:
-            return email
-        raise forms.ValidationError('Email "%s" is already in use.' % email)
+        qs = User.objects.exclude(pk=self.instance.pk).filter(email=email)
+        if qs.exists():
+            raise forms.ValidationError('Почта уже занята.')
+        return email
 
 
 class ProfileEditForm(forms.ModelForm):
