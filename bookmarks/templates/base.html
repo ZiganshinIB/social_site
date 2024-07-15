@@ -11,9 +11,9 @@
     <!-- если пользователь зарегистрирован -->
     {% if request.user.is_authenticated %}
     <ul class="menu">
-        <li {% if section="dashboard" %} class="selected" {% endif %}><a href="#">Мой кабинет</a></li>
-        <li {% if section="images" %} class="selected" {% endif %}><a href="#">Изоображении</a></li>
-        <li {% if section="people" %} class="selected" {% endif %}><a href="#">Люди</a></li>
+        <li {% if section == "dashboard" %} class="selected" {% endif %}><a href="#">Мой кабинет</a></li>
+        <li {% if section == "images" %} class="selected" {% endif %}><a href="#">Изоображении</a></li>
+        <li {% if section == "people" %} class="selected" {% endif %}><a href="#">Люди</a></li>
     </ul>
     {% endif %}
     <span class="user">
@@ -25,6 +25,18 @@
         {% endif %}
     </span>
 </div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message|safe }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div id="content">
     {% block content %}
     {% endblock %}
