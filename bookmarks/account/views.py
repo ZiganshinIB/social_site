@@ -44,6 +44,10 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Сохраняем пользователя
             new_user.save()
+            # Логиним пользователя
+            user = authenticate(username=new_user.username, password=user_form.cleaned_data['password'])
+            login(request, user)
+            # Отправляем страничку с успешной регистрацией
             return render(request, 'account/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
