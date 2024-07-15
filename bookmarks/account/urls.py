@@ -45,4 +45,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     # Первая страница пользователя
     path('', views.dashboard, name='dashboard'),
+    # Изменение профиля
+    path('edit/', views.edit, name='edit'),
 ]

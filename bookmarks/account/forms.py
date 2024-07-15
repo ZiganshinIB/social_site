@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 class LoginForm(forms.Form):
@@ -37,3 +38,28 @@ class UserRegistrationForm(forms.ModelForm):
         if User.objects.filter(email=data).exists():
             raise forms.ValidationError('Email already in use.')
         return data
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+    def clean_email(self):
+        """ Check if email already in use."""
+        email = self.cleaned_data.get('email')
+        if email == '':
+            return email
+        try:
+            user = User.objects.exclude(id=self.instance.id).get(email=email)
+        except User.DoesNotExist:
+            return email
+        raise forms.ValidationError('Email "%s" is already in use.' % email)
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('date_of_birth', 'photo')
+
+
