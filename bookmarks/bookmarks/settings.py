@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
@@ -109,3 +111,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Возвращает URL-адрес для заданной модели
+ABSOLUTE_URL_OVERRIDES = {
+    # Модель стандартного User
+    'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username]),
+
+}

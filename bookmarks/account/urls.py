@@ -47,4 +47,8 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     # Изменение профиля
     path('edit/', views.edit, name='edit'),
+    # Пользователи
+    path('users/', views.user_list, name='user_list'),
+    # Пользователь профиль
+    path('users/<username>/', views.user_detail, name='user_detail'),
 ]
